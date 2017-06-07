@@ -1,0 +1,44 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  labels:
+    name: hubot
+  name: hubot
+  namespace: core
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        name: hubot
+      name: hubot
+      namespace: core
+    spec:
+      containers:
+      - name: hubot
+        image: gcr.io/zerrtech-core/hubot:latest
+        imagePullPolicy: Always
+        command:
+          - "bin/hubot"
+          - "-d"
+          - "--adapter"
+          - "slack"
+        env:
+          - name: REDIS_URL
+            value: "redis://localhost:6379"
+          - name: HUBOT_SLACK_TOKEN
+            valueFrom:
+              secretKeyRef:
+                name: hubot-credentials
+                key: HUBOT_SLACK_TOKEN
+      - name: redis-sentinel-proxy
+        image: gcr.io/zerrtech-core/redis-sentinel-proxy:latest
+        imagePullPolicy: Always
+        command:
+          - "/go/bin/redis-sentinel-proxy"
+          - "--listen"
+          - "127.0.0.1:6379"
+          - "--sentinel"
+          - "redis-sentinel:26379"
+          - "--master"
+          - "default"
