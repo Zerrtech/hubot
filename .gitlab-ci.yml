@@ -1,0 +1,18 @@
+before_script:
+  - docker ps
+  - gcloud container clusters get-credentials core --zone us-west1-a --project zerrtech-core
+  - kubectl get pod
+
+stages:
+  - build
+  - deploy
+
+build:
+  stage: build
+  script: docker built -t gcr.io/zerrtech-core/hubot:latest
+  only:
+    - master
+
+deploy:
+  - gcloud docker -- push gcr.io/zerrtech-core/hubot:latest
+  - kubectl delete pod $(kubectl get pod --namespace=core -l name=hubot -o jsonpath='{.items[0].metadata.name}')
