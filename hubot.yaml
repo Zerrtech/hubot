@@ -17,10 +17,10 @@ spec:
     spec:
       containers:
       - name: hubot
-        image: gcr.io/zerrtech-core/hubot:latest
+        image: zerrtech/hubot:latest
         imagePullPolicy: Always
         command:
-          - "bin/hubot"
+          - "/bin/hubot"
           - "-d"
           - "--adapter"
           - "slack"

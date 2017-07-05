@@ -11,4 +11,4 @@ ls node_modules
 ls node_modules/.bin
 which hubot
 
-exec hubot --name "hal" "$@"
+exec node_modules/.bin/hubot --name "hal" "$@"
