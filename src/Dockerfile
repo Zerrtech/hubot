@@ -4,6 +4,7 @@ WORKDIR /
 
 ADD yarn.lock /yarn.lock
 RUN yarn
+RUN npm install
 
 ADD . /
 
