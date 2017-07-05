@@ -4,4 +4,10 @@ set -e
 
 export PATH="node_modules/.bin:node_modules/hubot/node_modules/.bin:$PATH"
 
-exec node_modules/.bin/hubot --name "hal" "$@"
+ls -l
+pwd
+ls node_modules
+ls node_modules/.bin
+which hubot
+
+exec hubot --name "hal" "$@"
