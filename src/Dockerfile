@@ -1,7 +1,9 @@
 FROM node:alpine
 
+WORKDIR /
+
 ADD yarn.lock /yarn.lock
-RUN yarn install
+RUN yarn
 
 ADD . /
 
